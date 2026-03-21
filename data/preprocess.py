@@ -14,15 +14,20 @@ import cv2
 import json
 from sklearn.datasets import fetch_lfw_people
 
-def prepare_data(n_users=100, save_dir="./lfw_processed"):
+def prepare_data(n_users=100, save_dir="./lfw_processed", random_seed=11):
+  np.random.seed(random_seed)
+  
   lfw = fetch_lfw_people(min_faces_per_person=10, resize=1.0)
 
+  all_user_ids = np.unique(lfw.target)
+  np.random.shuffle(all_user_ids)
   # pick the front n_users
-  user_ids = np.unique(lfw.target)[:n_users]
-  print(user_ids[:5])
+  user_ids = all_user_ids[:n_users]
 
   # label mapping
-  label_map = {old: new for old, new in enumerate(user_ids)}
+  label_map = {int(old): int(new) for new, old in enumerate(user_ids)}
+  print("Label mapping (original ID -> new ID):")
+  print(label_map)
 
   os.makedirs(save_dir, exist_ok=True)
 
@@ -53,7 +58,8 @@ def prepare_data(n_users=100, save_dir="./lfw_processed"):
 
   # save label map
   with open(f"{save_dir}/label_map.json", "w") as f:
-    json.dumps(label_map, f)
+    # print(int(label_map))
+    json.dump(label_map, f)
 
   print("Data prepared!")
 
