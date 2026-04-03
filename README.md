@@ -15,8 +15,8 @@ The pipeline consists of:
 1. Select a user to remove
 1. Fine-tune the model on remaining data only
 1. Apply:
-  - gradient clipping
-  - Gaussian noise on gradients
+    - gradient clipping
+    - Gaussian noise on gradients
 
 This weakens the model's ability to recognize the removed user while preserving performance on others.
 
