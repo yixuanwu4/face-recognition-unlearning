@@ -14,7 +14,7 @@ import cv2
 import json
 from sklearn.datasets import fetch_lfw_people
 
-def prepare_data(n_users=100, save_dir="./lfw_processed", random_seed=11):
+def prepare_data(n_users=100, save_dir="./data/lfw_processed", random_seed=11):
   np.random.seed(random_seed)
   
   lfw = fetch_lfw_people(min_faces_per_person=10, resize=1.0)
@@ -63,4 +63,4 @@ def prepare_data(n_users=100, save_dir="./lfw_processed", random_seed=11):
 
   print("Data prepared!")
 
-prepare_data()
+# prepare_data()

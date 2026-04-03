@@ -29,7 +29,7 @@ class FaceDataset:
 
 
     def __getitem__(self, idx):
-        img = cv2.imread(self.paths(idx))
+        img = cv2.imread(self.paths[idx])
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
         img = torch.from_numpy(img).permute(2,0,1).float() / 255

@@ -33,6 +33,6 @@ def train():
 
       pred = out.argmax(1)
       correct += (pred == y).sum().item()
-      total += y.soze(0)
+      total += y.size(0)
 
     print(f"Epoch {epoch} Acc: {correct/total:.3f}")
