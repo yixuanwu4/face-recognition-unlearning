@@ -27,11 +27,11 @@ def train():
 
     for x,y in loader:
       x, y = x.to(device), y.to(device)
-
+      optimizer.zero_grad()
+      
       out = model(x)
       loss=criterion(out, y)
-
-      optimizer.zero_grad()
+      
       loss.backward()
       optimizer.step()
 
