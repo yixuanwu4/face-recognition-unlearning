@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, ConcatDataset
 
 from data.dataset import FaceDataset
 from model.model import FaceModel
@@ -9,7 +9,10 @@ from model.model import FaceModel
 def train():
   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-  dataset = FaceDataset("./data/lfw_processed/train")
+  # we want the model to contain the "to-be-forgotten" user first
+  train_dataset = FaceDataset("./data/lfw_processed/train")
+  forget_dataset = FaceDataset("./data/lfw_processed/forget") 
+  dataset = ConcatDataset([train_dataset, forget_dataset])
   loader = DataLoader(dataset, batch_size=8, shuffle=True)
 
   model = FaceModel().to(device)
@@ -36,3 +39,5 @@ def train():
       total += y.size(0)
 
     print(f"Epoch {epoch} Acc: {correct/total:.3f}")
+
+  torch.save(model.state_dict(), "./checkpoints/original.pth")
