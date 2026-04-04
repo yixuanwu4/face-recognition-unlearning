@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -40,4 +41,5 @@ def train():
 
     print(f"Epoch {epoch} Acc: {correct/total:.3f}")
 
+  os.makedirs("./checkpoints", exist_ok = True)
   torch.save(model.state_dict(), "./checkpoints/original.pth")
