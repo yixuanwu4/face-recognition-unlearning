@@ -14,9 +14,7 @@ def unlearn(noise_std=0.05):
   model.load_state_dict(torch.load("./checkpoints/original.pth"))
   model.to(device)
 
-  train_dataset = FaceDataset("./data/lfw_processed/train")
-  forget_dataset = FaceDataset("./data/lfw_processed/forget") 
-  dataset = ConcatDataset([train_dataset, forget_dataset])
+  dataset = FaceDataset("./data/lfw_processed/train")
   loader = DataLoader(dataset, batch_size=8, shuffle=True)
 
   optimizer = optim.Adam(model.parameters(), lr=1e-4)
