@@ -8,7 +8,7 @@ from data.dataset import FaceDataset
 from model.model import FaceModel
 
 def unlearn(noise_std=0.05):
-  device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+  device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
   model = FaceModel()
   model.load_state_dict(torch.load("./checkpoints/original.pth"))
@@ -44,6 +44,5 @@ def unlearn(noise_std=0.05):
 
   os.makedirs("./checkpoints", exist_ok=True)
   torch.save(model.state_dict(), "./checkpoints/unlearned.pth")
-
 
 
