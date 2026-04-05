@@ -60,6 +60,14 @@ def prepare_data(n_users=100, save_dir="./data/lfw_processed", random_seed=11):
   with open(f"{save_dir}/label_map.json", "w") as f:
     # print(int(label_map))
     json.dump(label_map, f)
+  
+  meta = {
+    "forget_user_original": int(forget_user),
+    "forget_user_new_label": int(label_map[forget_user])
+  }
+
+  with open(f"{save_dir}/meta.json", "w") as f:
+      json.dump(meta, f)
 
   print("Data prepared!")
 
